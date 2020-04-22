@@ -25,7 +25,7 @@ SECRET_KEY = '=4ftzuz7s##(1zpch$ng+v3fy)u-rys%6adzevj(%z(pd_x23#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["www.cnyanpan.top"]
+ALLOWED_HOSTS = ["www.cnyanpan.top", "*"]
 
 
 # Application definition
