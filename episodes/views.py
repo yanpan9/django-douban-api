@@ -14,21 +14,38 @@ def parse_episode(req):
 		# and can do better
 		ep_info = soup.find("ul", class_="ep-info")
 		lst = ep_info.find_all("li")
-		res["name"] = lst[0].find("span", class_="all").string
-		res["name_ori"] = lst[1].find("span", class_="all").string 
-		res["release_date"] = lst[2].find("span", class_="all").string
-		intro = lst[3].find("span", class_="all")
-		if not intro.string:
-			res["intro"] = intro.get_text()
+		name = lst[0].find("span", class_="all")
+		if name:
+			res["name"] = name.string
 		else:
-			res["intro"] = intro.string
-		hide = lst[3].find("span", class_="hide")
-		if hide:
-			string = hide.string
-			if string:
-				res["intro"] += hide.string
+			res["name"] = None
+		name_ori = lst[1].find("span", class_="all")
+		if name_ori:
+			res["name_ori"] = name_ori.string
+		else:
+			res["name_ori"] = None
+		if (not name) and name_ori:
+			res["name"] = res["name_ori"]
+		date =  lst[2].find("span", class_="all")
+		if date:
+			res["release_date"] = date.string
+		else:
+			res["release_date"] = None
+		intro = lst[3].find("span", class_="all")
+		if intro:
+			if not intro.string:
+				res["intro"] = intro.get_text()
 			else:
-				res["intro"] += hide.get_text()
+				res["intro"] = intro.string
+			hide = lst[3].find("span", class_="hide")
+			if hide:
+				string = hide.string
+				if string:
+					res["intro"] += hide.string
+				else:
+					res["intro"] += hide.get_text()
+		else:
+			res["intro"] = None
 		return res
 
 def get_episodes(douban_id, episodes_num):
