@@ -19,7 +19,7 @@ def parse_celebrity(celebrity):
 		result["name"] = name 
 	role = info.find("span", class_="role").string
 	if "(" in role:
-		role = re.search(r"\(饰 (.+?)\)", role).group(1)
+		role = re.search(r"\(. (.+?)\)", role).group(1)
 		result["role"] = role
 	
 	return result
